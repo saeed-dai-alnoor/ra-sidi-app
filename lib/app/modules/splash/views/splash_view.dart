@@ -47,6 +47,8 @@ class SplashView extends GetView<SplashController> {
                   padding: const EdgeInsets.all(58.0),
                   child: Lottie.asset(
                     'assets/animations/appLoading.json',
+                    width: 170,
+                    height: 170,
                     fit: BoxFit.fill,
                   ),
                 ),

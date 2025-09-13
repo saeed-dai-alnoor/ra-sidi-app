@@ -3,11 +3,13 @@ import 'package:get_storage/get_storage.dart';
 import '../../../routes/app_pages.dart';
 
 class SplashController extends GetxController {
-  final token = GetStorage().read('token');
+  final storage = GetStorage();
+  late final token = storage.read('token');
+  late final name = storage.read('name');
   void _checkAuth() async {
     await Future.delayed(Duration(milliseconds: 700)); // وقت الانتظار
     if (token != null) {
-      Get.offAllNamed(Routes.HOME); // المستخدم مسجل
+      Get.offAllNamed(Routes.HOME, arguments: {"name": name}); // المستخدم مسجل
     } else {
       Get.offAllNamed(Routes.LOGIN); // غير مسجل
     }

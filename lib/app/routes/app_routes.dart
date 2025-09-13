@@ -7,6 +7,11 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const LOGIN = _Paths.LOGIN;
   static const SIGN_UP = _Paths.SIGN_UP;
+  static const BILLS = _Paths.BILLS;
+  static const TELECOM = _Paths.TELECOM;
+  static const BUY_CREDIT = _Paths.BUY_CREDIT;
+  static const CONFIRM_AMOUNT = _Paths.CONFIRM_AMOUNT;
+  static const STATUS = _Paths.STATUS;
 }
 
 abstract class _Paths {
@@ -15,4 +20,9 @@ abstract class _Paths {
   static const SPLASH = '/splash';
   static const LOGIN = '/login';
   static const SIGN_UP = '/sign-up';
+  static const BILLS = '/bills';
+  static const TELECOM = '/telecom';
+  static const BUY_CREDIT = '/buy-credit';
+  static const CONFIRM_AMOUNT = '/confirm-amount';
+  static const STATUS = '/status';
 }

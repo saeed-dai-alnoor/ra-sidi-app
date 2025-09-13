@@ -42,15 +42,16 @@ class SignUpController extends GetxController {
     try {
       final response = await repository.signupUser(userData);
       final token = response.data['token'];
-      // print(response.data);
-      // print("Token: $token");
-      storage.write('token', token);
-      storage.write('name', nameController.text);
-      storage.write('email', emailController.text);
+      final name = response.data['name'];
+      final email = response.data['email'];
+
+      await storage.write('token', token);
+      await storage.write('name', name);
+      await storage.write('email', email);
       Get.snackbar("نجاح", "تم تسجيل المستخدم بنجاح!");
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.HOME, arguments: {"name": name});
     } catch (e) {
-      Get.snackbar("Error", e.toString());
+      Get.snackbar("خطأ", e.toString());
     } finally {
       isLoading.value = false;
     }
