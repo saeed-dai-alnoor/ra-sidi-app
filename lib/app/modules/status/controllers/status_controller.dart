@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
 
 class StatusController extends GetxController {
-  //TODO: Implement StatusController
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +17,5 @@ class StatusController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+ 
 }

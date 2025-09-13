@@ -57,13 +57,15 @@ class BuyCreditView extends GetView<BuyCreditController> {
                     'إرسال',
                     // 4. تفعيل/تعطيل الزر بناءً على متغير isButtonEnabled
                     controller.isButtonEnabled.value
-                        ? () => Get.toNamed(Routes.CONFIRM_AMOUNT)
+                        ? () => Get.toNamed(
+                            Routes.CONFIRM_AMOUNT,
+                            arguments: controller.phoneController.text,
+                          )
                         : null, // تمرير null يعطل الزر تلقائياً
                     color: const Color(0xFFFFA726),
                   );
                 }),
                 _buildActionButton('إلغاء', () => Get.back()),
-               
               ],
             ),
           ],

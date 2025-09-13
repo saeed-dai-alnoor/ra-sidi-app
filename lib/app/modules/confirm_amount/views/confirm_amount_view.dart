@@ -19,27 +19,16 @@ class ConfirmAmountView extends GetView<ConfirmAmountController> {
           icon: Icon(CupertinoIcons.back),
           onPressed: () => Get.back(),
         ),
-        title: Image.asset(
-          'assets/images/logo.png',
-          fit: BoxFit.fill,
-          height: 40,
-        ), // سنضيف هذا الشعار لاحقاً
+        title: Text('شعار باسكودا', style: TextStyle(fontSize: 18)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        // لاستيعاب المحتوى إذا كان أطول من الشاشة
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. عنوان العملية
-            const Text(
-              'شراء رصيد',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            // ... عنوان العملية ...
             const SizedBox(height: 20),
-
-            // 2. صندوق تفاصيل العملية
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -48,79 +37,64 @@ class ConfirmAmountView extends GetView<ConfirmAmountController> {
               ),
               child: Column(
                 children: [
-                  _buildInfoRow('رقم الموبايل:', '968463592'),
+                  // -->> تعديل: عرض رقم الهاتف من الـ Controller <<--
+                  _buildInfoRow('رقم الموبايل:', controller.phoneNumber),
                   const Divider(),
-                  _buildInfoRow('أدنى مبلغ:', '1'),
+                  // -->> تعديل: عرض المبالغ من الـ Controller <<--
+                  _buildInfoRow('أدنى مبلغ:', controller.minAmount.toString()),
                   const Divider(),
-                  _buildInfoRow('أعلى مبلغ:', '50000'),
+                  _buildInfoRow('أعلى مبلغ:', controller.maxAmount.toString()),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-
-            // 3. صندوق اختيار الحساب
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  value: '1003077111340001', // قيمة افتراضية
-                  icon: const Icon(Icons.arrow_drop_down),
-                  items: <String>['1003077111340001', 'حساب آخر']
-                      .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      })
-                      .toList(),
-                  onChanged: (String? newValue) {
-                    // منطق تغيير الحساب
-                  },
-                ),
-              ),
-            ),
+            // ... صندوق اختيار الحساب ...
             const SizedBox(height: 20),
 
-            // 4. حقل إدخال المبلغ
-            TextField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'أدخل المبلغ',
-                prefixIcon: Container(
-                  margin: const EdgeInsets.all(8),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
+            // -->> تعديل: حقل إدخال المبلغ <<--
+            Obx(() {
+              return TextField(
+                controller: controller.amountController, // ربط الـ Controller
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'أدخل المبلغ',
+                  errorText: controller.errorText.value, // عرض رسالة الخطأ
+                  prefixIcon: Container(
+                    margin: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade50,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Text(
+                      'SDG',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: const Text(
-                    'SDG',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-            ),
+              );
+            }),
             const SizedBox(height: 30),
 
-            // 5. أزرار الإلغاء والتأكيد
+            // -->> تعديل: أزرار الإلغاء والتأكيد <<--
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildActionButton('تأكيد', color: const Color(0xFFFFA726), () {
-                  // print('تأكيد clicked');
-                  Get.offNamed(Routes.STATUS);
-                  // هنا سننتقل لصفحة قيد الانتظار
+                Obx(() {
+                  return _buildActionButton(
+                    'تأكيد',
+                    // تفعيل/تعطيل الزر بناءً على الحالة
+                    controller.isButtonEnabled.value
+                        ? () => Get.offNamed(Routes.STATUS)
+                        : null,
+                    color: const Color(0xFFFFA726),
+                  );
                 }),
                 _buildActionButton('إلغاء', () => Get.back()),
               ],
@@ -131,31 +105,35 @@ class ConfirmAmountView extends GetView<ConfirmAmountController> {
     );
   }
 
-  // ويدجت مساعد لعرض صف معلومات
+  // ... ويدجت _buildInfoRow ...
   Widget _buildInfoRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.grey)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(label, style: const TextStyle(color: Colors.grey, fontSize: 17)),
+          Text(
+            value,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
         ],
       ),
     );
   }
 
-  // ويدجت مساعد لإنشاء الأزرار الحمراء
+  // تعديل بسيط على الويدجت ليقبل دالة onPressed تكون nullable
   Widget _buildActionButton(
     String label,
-    VoidCallback onPressed, {
+    VoidCallback? onPressed, {
     Color? color,
   }) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed:
+          onPressed, // الآن onPressed يمكن أن يكون null، وهذا ما يريده ElevatedButton لتعطيل الزر
       style: ElevatedButton.styleFrom(
-        // إذا لم يتم توفير لون، استخدم الأحمر، وإلا استخدم اللون المُمرر
         backgroundColor: color ?? Colors.red[700],
+        disabledBackgroundColor: Colors.grey,
         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),

@@ -50,7 +50,7 @@ class StatusView extends GetView<StatusController> {
                   Container(
                     padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2), // لون شفاف قليلاً
+                      color: Colors.white.withValues(alpha: 0.2), // لون شفاف قليلاً
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
