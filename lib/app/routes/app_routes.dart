@@ -12,6 +12,8 @@ abstract class Routes {
   static const BUY_CREDIT = _Paths.BUY_CREDIT;
   static const CONFIRM_AMOUNT = _Paths.CONFIRM_AMOUNT;
   static const STATUS = _Paths.STATUS;
+  static const BUY_ELECTRICITY = _Paths.BUY_ELECTRICITY;
+  static const CONFIRM_ELECTRICITY = _Paths.CONFIRM_ELECTRICITY;
 }
 
 abstract class _Paths {
@@ -25,4 +27,6 @@ abstract class _Paths {
   static const BUY_CREDIT = '/buy-credit';
   static const CONFIRM_AMOUNT = '/confirm-amount';
   static const STATUS = '/status';
+  static const BUY_ELECTRICITY = '/buy-electricity';
+  static const CONFIRM_ELECTRICITY = '/confirm-electricity';
 }

@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:ra_sidi_app/app/core/theme/app_theme.dart';
 
-import 'app/controllers/internet_controller.dart';
-import 'app/modules/splash/controllers/splash_controller.dart';
+// import 'app/controllers/internet_controller.dart';
+// import 'app/modules/splash/controllers/splash_controller.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async{
@@ -17,8 +17,8 @@ void main() async{
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  Get.put(SplashController());
-  Get.put(InternetController());
+  // Get.put(SplashController());
+  // Get.put(InternetController());
   runApp(
     GetMaterialApp(
       title: "Ra Sidi App",

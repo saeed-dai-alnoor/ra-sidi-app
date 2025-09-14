@@ -24,6 +24,22 @@ class ConfirmAmountController extends GetxController {
     amountController.addListener(_validateAmount);
   }
 
+  String? validateAmount(String? value) {
+  if (value == null || value.isEmpty) {
+    return null; // لا تظهر خطأ إذا كان الحقل فارغاً
+  }
+  final int? amount = int.tryParse(value);
+  if (amount == null) {
+    return 'الرجاء إدخال رقم صحيح.';
+  } else if (amount < minAmount) {
+    return 'أدنى مبلغ هو $minAmount';
+  } else if (amount > maxAmount) {
+    return 'أعلى مبلغ هو $maxAmount';
+  }
+  // إذا كان كل شيء صحيحاً
+  return null;
+}
+
   // دالة التحقق من المبلغ
   void _validateAmount() {
     // تجاهل التحقق إذا كان الحقل فارغاً

@@ -61,10 +61,13 @@ class BillsView extends GetView<BillsController> {
         onTap: () {
           if (label == 'اتصالات/إنترنت') {
             Get.toNamed(Routes.TELECOM); // الانتقال لصفحة الاتصالات
-          } else {
-            // print('$label clicked');
-          }
-        },
+          }else if (label == 'شراء الكهرباء') { // <-- هذا هو التعديل
+          Get.toNamed(Routes.BUY_ELECTRICITY);
+        } else {
+          // print('$label clicked');
+        }
+      },
+        
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
