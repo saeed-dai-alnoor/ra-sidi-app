@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import '../../../data/models/auth/sign_up_model.dart';
+// import '../../../data/models/auth/sign_up_model.dart';
 import '../../../data/repositories/auth/signup_repository.dart';
 import '../../../routes/app_pages.dart';
 
@@ -33,21 +33,21 @@ class SignUpController extends GetxController {
       return;
     }
     isLoading.value = true;
-    final userData = SignUpModel(
-      name: nameController.text,
-      email: emailController.text,
-      password: passwordController.text,
-    );
+    // final userData = SignUpModel(
+    //   name: nameController.text,
+    //   email: emailController.text,
+    //   password: passwordController.text,
+    // );
 
     try {
-      final response = await repository.signupUser(userData);
-      final token = response.data['token'];
-      final name = response.data['name'];
-      final email = response.data['email'];
+      // final response = await repository.signupUser(userData);
+      // final token = response.data['token'];
+      final name = nameController.text;
+      // final email = response.data['email'];
 
-      await storage.write('token', token);
+      // await storage.write('token', token);
       await storage.write('name', name);
-      await storage.write('email', email);
+      // await storage.write('email', email);
       Get.snackbar("نجاح", "تم تسجيل المستخدم بنجاح!");
       Get.offAllNamed(Routes.HOME, arguments: {"name": name});
     } catch (e) {

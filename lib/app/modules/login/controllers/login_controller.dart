@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import '../../../data/models/auth/login_model.dart';
+// import '../../../data/models/auth/login_model.dart';
 import '../../../data/repositories/auth/login_repository.dart';
 import '../../../routes/app_pages.dart';
 
@@ -32,22 +32,23 @@ class LoginController extends GetxController {
       return;
     }
     isLoading.value = true;
-    final userData = LoginModel(
-      email: emailController.text,
-      password: passwordController.text,
-    );
+    // final userData = LoginModel(
+    //   email: emailController.text,
+    //   password: passwordController.text,
+    // );
 
     try {
-      final response = await repository.loginUser(userData);
-      final token = response.data['token'];
-      final name = response.data['name'];
-      final email = response.data['email'];
+      // final response = await repository.loginUser(userData);
+      // final token = response.data['token'];
+      // final name = response.data['name'];
+      // final email = response.data['email'];
 
-      await storage.write('token', token);
-      await storage.write('name', name);
-      await storage.write('email', email);
+      
+      // await storage.write('token', token);
+      // await storage.write('name', name);
+      // await storage.write('email', email);
       Get.snackbar("نجاح", "تم تسجيل الدخول بنجاح!");
-      Get.offAllNamed(Routes.HOME, arguments: {"name": name});
+      Get.offAllNamed(Routes.HOME, arguments: {"name": storage.read('name')});
     } catch (e) {
       Get.snackbar("خطأ", e.toString());
     } finally {
