@@ -33,7 +33,7 @@ class SplashView extends GetView<SplashController> {
             Center(
               child: ClipOval(
                 child: Image.asset(
-                  "assets/images/logo.png",
+                  "assets/images/bascoda.png",
                   fit: BoxFit.contain,
                   width: 150,
                   height: 150,

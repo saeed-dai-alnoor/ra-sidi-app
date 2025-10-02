@@ -17,9 +17,11 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         backgroundColor: Color(0xFFFFA726),
 
-        title: const Text(
-          'باسكودا',
-          style: TextStyle(color: Colors.black, fontSize: 18),
+        title: Image.asset(
+          "assets/images/bascoda.png",
+          height: 50,
+          width: 50,
+          fit: BoxFit.fill,
         ),
         centerTitle: true,
         actions: [
